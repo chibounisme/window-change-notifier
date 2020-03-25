@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <!-- <link rel="stylesheet" href="debugger.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <title>Window Change Notifier</title>
+</head>
+
+<body>
+  <section class="hero is-fullheight ">
+    <section class="section ">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered field">
+            <div class="control has-text-centered">
+              <div class="select">
+                <select>
+                  <option value="0" selected hidden>Select a Window</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <button class="button is-warning" id="clear_btn" disabled>Clear</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section ">
+      <div class="columns is-centered">
+        <p class="title is-4 has-text-centered" id="no_window_indicator">No Window is Selected!</p>
+      </div>
+      <div class="columns is-centered">
+        <video class="has-text-centered" style="min-width:100%; max-width: 100%; min-height: 300px; max-height:300px" hidden id="video"></video>
+      </div>
+    </section>
+    <footer class="footer ">
+      <div class="content">
+        <div class="columns is-centered">
+          <div class="column has-text-centered is-one-half">
+            <button class="button is-success" id="screenshot_btn" disabled>Take Screenshot</button>
+          </div>
+          <div class="column has-text-centered">
+            <button class="button is-primary" id="monitor_btn" disabled>Start Monitoring</button>
+          </div>
+        </div>
+      </div>
+      <div class="notification is-success" hidden id="change_notification">
+        <button class="delete"></button>
+        Change in Window Detected!
+      </div>
+    </footer>
+  </section>
+  <script src="render.js"></script>
+</body>
+
+</html>
