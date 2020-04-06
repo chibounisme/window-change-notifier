@@ -22,7 +22,7 @@ const appIcon = path.join(__dirname, 'images/tray.png')
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 1012,
+        width: 412,
         height: 870,
         webPreferences: {
             nodeIntegration: true
@@ -34,7 +34,7 @@ function createWindow() {
         minHeight: 870,
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'))
-    mainWindow.openDevTools();
+    // mainWindow.openDevTools();
     mainWindow.on('minimize', function (event) {
         loadTray();
         event.preventDefault()
