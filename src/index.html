@@ -12,8 +12,7 @@
 </head>
 
 <body>
-  <section class="hero is-fullheight ">
-    <section class="section ">
+  <section class="section is-fullheight ">
       <div class="container">
         <div class="columns is-centered">
           <div class="column has-text-centered field">
@@ -32,16 +31,12 @@
           </div>
         </div>
       </div>
-    </section>
-    <section class="section ">
       <div class="columns is-centered">
         <p class="title is-4 has-text-centered" id="no_window_indicator">No Window is Selected!</p>
       </div>
       <div class="columns is-centered">
         <video class="has-text-centered" style="min-width:100%; max-width: 100%; min-height: 300px; max-height:300px" hidden id="video"></video>
       </div>
-    </section>
-    <footer class="footer ">
       <div class="content">
         <div class="columns is-centered">
           <div class="column has-text-centered is-one-half">
@@ -52,11 +47,28 @@
           </div>
         </div>
       </div>
+      <div class="column has-text-centered" id="control_notification">
+        <div class="field">
+          <div class="control">
+            <div class="field">
+              <label class="label is-small">Webhook URL</label>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input is-small" id="monitor_webhook" type="text" placeholder="Webhook URL">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-link"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="notification is-success" hidden id="change_notification">
         <button class="delete"></button>
         Change in Window Detected!
       </div>
-    </footer>
   </section>
   <script src="render.js"></script>
 </body>

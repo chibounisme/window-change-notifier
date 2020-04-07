@@ -1,4 +1,6 @@
 const { desktopCapturer } = require('electron')
+const notify = require('electron-notification')
+const http = require('http')
 
 let window_select = document.querySelector('select')
 let clear_button = document.getElementById('clear_btn')
@@ -6,6 +8,10 @@ let screenshot_button = document.getElementById('screenshot_btn')
 let monitor_button = document.getElementById('monitor_btn')
 let video_elt = document.querySelector('video')
 let change_notification = document.getElementById('change_notification')
+
+let monitor_webhook = document.getElementById('monitor_webhook')
+let control_section = document.getElementById('control_notification')
+
 let dekstopCaptures
 let selectedDesktopCapture = 0
 let currentScreenshot = null
@@ -125,6 +131,8 @@ function launchMonitoring() {
     let ctx = canvas.getContext('2d')
     ctx.drawImage(video, 0, 0)
     if(canvas.toDataURL('image/jpeg', 1.0) != currentScreenshot) {
+        control_section.style.visibility = 'hidden'
+        control_section.style.height = '0'
         change_notification.hidden = false
         monitorSource()
         playSuccessAudio()
@@ -133,9 +141,37 @@ function launchMonitoring() {
     }
 }
 
+function validURL(str) {
+    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    var isCorrect = !!pattern.test(str);
+    if(!isCorrect) console.log('Wrong url');
+    return !!pattern.test(str);
+}
+
+function sendDesktopNotification(title, body) {
+    new notify(
+        title, {
+        body: body,
+        icon: 'images/tray.png'
+    });
+}
+
+function sendWebhookNotification(url){
+    http.get(url, (resp) => {
+        console.log(resp.statusCode)        
+      }).on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
+}
+
 function playSuccessAudio() {
-    let aud = new Audio('audio/success.mp3')
-    aud.play()
+    if(validURL(monitor_webhook.value)) sendWebhookNotification(monitor_webhook.value);
+    sendDesktopNotification('WCNotifier', `The window has been changed to another state`);
 }
 
 window.onload = captureDesktopSources()
@@ -149,6 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
     (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
       $notification = $delete.parentNode
       $delete.addEventListener('click', () => {
+        control_section.style.visibility = 'visible'
+        control_section.style.height = null
         change_notification.hidden = true
       })
     })

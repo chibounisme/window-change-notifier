@@ -34,7 +34,7 @@ function createWindow() {
         minHeight: 870,
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'))
-    //mainWindow.openDevTools();
+    // mainWindow.openDevTools();
     mainWindow.on('minimize', function (event) {
         loadTray();
         event.preventDefault()
