@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray } = require('electron')
+const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
 
 
@@ -34,7 +34,7 @@ function createWindow() {
         minHeight: 870,
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'))
-    // mainWindow.openDevTools();
+    //mainWindow.openDevTools();
     mainWindow.on('minimize', function (event) {
         loadTray();
         event.preventDefault()
@@ -63,3 +63,14 @@ app.whenReady().then(createWindow)
 Menu.setApplicationMenu(null)
 
 
+// demo
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    event.reply('asynchronous-reply', 'pong')
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+    event.returnValue = 'pong'
+})

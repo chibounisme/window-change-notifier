@@ -11,3 +11,7 @@ To run the applicaton, please run the following commands:
 - >npm start
 
 To build the application to your preferred operating system, please visit [this](https://github.com/electron/electron-packager) link.
+
+
+#### Android
+A simple app integrated with app [(source code)](https://github.com/Bujupah/window-change-notifier-mobile-integration)
