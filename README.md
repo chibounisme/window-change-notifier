@@ -17,7 +17,7 @@ To build the application to your preferred operating system, please visit [this]
 A simple app integrated with this [(source code)](https://github.com/Bujupah/window-change-notifier-mobile-integration)
 
 Binary :
-* [app-x86_64-release](/blob/master/apk/app-x86_64-release.apk)
-* [app-arm64-v8a-release](/blob/master/apk/app-arm64-v8a-release.apk)
-* [app-armeabi-v7a-release](/blob/master/apk/app-armeabi-v7a-release.apk)
+* [app-x86_64-release](/apk/app-x86_64-release.apk)
+* [app-arm64-v8a-release](/apk/app-arm64-v8a-release.apk)
+* [app-armeabi-v7a-release](/apk/app-armeabi-v7a-release.apk)
         
