@@ -1,4 +1,4 @@
-const { desktopCapturer } = require('electron')
+const { desktopCapturer, ipcMain } = require('electron')
 const notify = require('electron-notification')
 const http = require('http')
 
@@ -161,12 +161,39 @@ function sendDesktopNotification(title, body) {
     });
 }
 
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        //TODO: do something
+    }
+}
+
 function sendWebhookNotification(url){
-    http.get(url, (resp) => {
-        console.log(resp.statusCode)        
-      }).on("error", (err) => {
+    var imgBase64 = getScreenshot();
+    const options = {
+        headers: {
+            'id': new Date().getDate(),
+            'title': 'From Desktop',
+            'body' : 'Change has been detected!',
+            'image': imgBase64
+        }
+    };
+    http.get(url, options, (resp) => {
+        console.log(resp.statusCode)
+    }).on("error", (err) => {
         console.log("Error: " + err.message);
-      });
+    });
+}
+
+function getScreenshot() {
+    const canvas = document.createElement("canvas");
+    canvas.width = video_elt.clientWidth * 1;
+    canvas.height = video_elt.clientHeight * 1;
+    canvas.getContext('2d').drawImage(video_elt, 0, 0, canvas.width, canvas.height);
+
+    const image = new Image()
+    image.src = canvas.toDataURL();
+
+    return image.src.substr('data:image/png;base64,'.length);
 }
 
 function playSuccessAudio() {
@@ -191,3 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
 })
+
+
+// demo
+console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+
+ipcRenderer.on('asynchronous-reply', (event, arg) => {
+  console.log(arg) // prints "pong"
+})
+ipcRenderer.send('asynchronous-message', 'ping')

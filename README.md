@@ -11,3 +11,13 @@ To run the applicaton, please run the following commands:
 - >npm start
 
 To build the application to your preferred operating system, please visit [this](https://github.com/electron/electron-packager) link.
+
+
+#### Android
+A simple app integrated with this [(source code)](https://github.com/Bujupah/window-change-notifier-mobile-integration)
+
+Binary :
+* [app-x86_64-release](/apk/app-x86_64-release.apk)
+* [app-arm64-v8a-release](/apk/app-arm64-v8a-release.apk)
+* [app-armeabi-v7a-release](/apk/app-armeabi-v7a-release.apk)
+        
