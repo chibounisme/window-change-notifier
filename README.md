@@ -1,5 +1,5 @@
 # Window Change Notifier
-### Current version: 0.1.0
+### Current version: 0.1.0.1
 #### Tested and working on: _Windows 10_
 A simple ElectronJS Application that notifies you of a change in a desktop application GUI.
 You can take a screenshot of any of your open desktop apps and you will be automatically notified through sound if any changes happen by comparing that screenshot to the current GUI of the selected app.

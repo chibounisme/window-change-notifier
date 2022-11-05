@@ -2,4 +2,16 @@
     display: none;
 }
 
-html, body {margin: 0; height: 100%; overflow: hidden}
+html,
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden
+}
+
+video {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 300px;
+    max-height: 300px"
+}

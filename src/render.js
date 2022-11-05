@@ -25,15 +25,15 @@ async function getDesktopCaptures() {
 }
 
 async function captureDesktopSources() {
-    getDesktopCaptures().then(()=> {
+    getDesktopCaptures().then(() => {
         window_select.innerHTML = '<option value=\"0\" hidden>Select a Window</option>'
         dekstopCaptures.forEach(element => {
-            if(selectedDesktopCapture == element.id)
+            if (selectedDesktopCapture == element.id)
                 window_select.innerHTML += `<option value="${element.id}" selected>${element.name}</option>`
             else
                 window_select.innerHTML += `<option value="${element.id}">${element.name}</option>`
         })
-        if(dekstopCaptures.filter(element => element.id == selectedDesktopCapture).length == 0) clearSelect()
+        if (dekstopCaptures.filter(element => element.id == selectedDesktopCapture).length == 0) clearSelect()
     })
     setTimeout(captureDesktopSources, 500)
 }
@@ -76,7 +76,7 @@ function clearSelect() {
 }
 
 function manageScreenshots() {
-    if(video_elt.paused) {
+    if (video_elt.paused) {
         screenshot_button.innerHTML = "Take a screenshot"
         monitor_button.disabled = true
         video_elt.play()
@@ -94,9 +94,8 @@ function manageScreenshots() {
     }
 }
 
-
 function monitorSource() {
-    if(currentlyMonitoring) {
+    if (currentlyMonitoring) {
         currentlyMonitoring = false
         monitor_button.classList.remove('is-danger')
         monitor_button.classList.add('is-primary')
@@ -106,7 +105,7 @@ function monitorSource() {
         monitor_button.disabled = true
         screenshot_button.disabled = false
         screenshot_button.innerHTML = 'Take a screenshot'
-        window.clearInterval(monitorTimeoutHandler);
+        window.clearInterval(monitorTimeoutHandler)
         monitorTimeoutHandler = null
         video.play()
     } else {
@@ -130,7 +129,7 @@ function launchMonitoring() {
     canvas.width = video_elt.width
     let ctx = canvas.getContext('2d')
     ctx.drawImage(video, 0, 0)
-    if(canvas.toDataURL('image/jpeg', 1.0) != currentScreenshot) {
+    if (canvas.toDataURL('image/jpeg', 1.0) != currentScreenshot) {
         control_section.style.visibility = 'hidden'
         control_section.style.height = '0'
         change_notification.hidden = false
@@ -142,15 +141,15 @@ function launchMonitoring() {
 }
 
 function validURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-    var isCorrect = !!pattern.test(str);
-    if(!isCorrect) console.log('Wrong url');
-    return !!pattern.test(str);
+    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i') // fragment locator
+    var isCorrect = !!pattern.test(str)
+    if (!isCorrect) console.log('Wrong url')
+    return !!pattern.test(str)
 }
 
 function sendDesktopNotification(title, body) {
@@ -158,7 +157,7 @@ function sendDesktopNotification(title, body) {
         title, {
         body: body,
         icon: 'images/tray.png'
-    });
+    })
 }
 
 function callback(error, response, body) {
@@ -167,38 +166,38 @@ function callback(error, response, body) {
     }
 }
 
-function sendWebhookNotification(url){
-    var imgBase64 = getScreenshot();
+function sendWebhookNotification(url) {
+    var imgBase64 = getScreenshot()
     const options = {
         headers: {
             'id': new Date().getDate(),
             'title': 'From Desktop',
-            'body' : 'Change has been detected!',
+            'body': 'Change has been detected!',
             'image': imgBase64
         }
-    };
+    }
     http.get(url, options, (resp) => {
         console.log(resp.statusCode)
     }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+        console.log("Error: " + err.message)
+    })
 }
 
 function getScreenshot() {
-    const canvas = document.createElement("canvas");
-    canvas.width = video_elt.clientWidth * 1;
-    canvas.height = video_elt.clientHeight * 1;
-    canvas.getContext('2d').drawImage(video_elt, 0, 0, canvas.width, canvas.height);
+    const canvas = document.createElement("canvas")
+    canvas.width = video_elt.clientWidth * 1
+    canvas.height = video_elt.clientHeight * 1
+    canvas.getContext('2d').drawImage(video_elt, 0, 0, canvas.width, canvas.height)
 
     const image = new Image()
-    image.src = canvas.toDataURL();
+    image.src = canvas.toDataURL()
 
-    return image.src.substr('data:image/png;base64,'.length);
+    return image.src.substring('data:image/png;base64,'.length)
 }
 
 function playSuccessAudio() {
-    if(validURL(monitor_webhook.value)) sendWebhookNotification(monitor_webhook.value);
-    sendDesktopNotification('WCNotifier', `The window has been changed to another state`);
+    if (validURL(monitor_webhook.value)) sendWebhookNotification(monitor_webhook.value)
+    sendDesktopNotification('WCNotifier', `The window has been changed to another state`)
 }
 
 window.onload = captureDesktopSources()
@@ -207,23 +206,21 @@ clear_button.onclick = clearSelect
 screenshot_button.onclick = manageScreenshots
 monitor_button.onclick = monitorSource
 
-
 document.addEventListener('DOMContentLoaded', () => {
     (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
-      $notification = $delete.parentNode
-      $delete.addEventListener('click', () => {
-        control_section.style.visibility = 'visible'
-        control_section.style.height = null
-        change_notification.hidden = true
-      })
+        $notification = $delete.parentNode
+        $delete.addEventListener('click', () => {
+            control_section.style.visibility = 'visible'
+            control_section.style.height = null
+            change_notification.hidden = true
+        })
     })
 })
-
 
 // demo
 console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
 
 ipcRenderer.on('asynchronous-reply', (event, arg) => {
-  console.log(arg) // prints "pong"
+    console.log(arg) // prints "pong"
 })
 ipcRenderer.send('asynchronous-message', 'ping')

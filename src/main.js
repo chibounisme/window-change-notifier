@@ -1,18 +1,18 @@
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
 
-
 let mainWindow
 let tray
-let appHasBeenMinimized = false;
+let appHasBeenMinimized = false
+
 const contextMenu = Menu.buildFromTemplate([
-    { 
-        label: 'Show App', click:  function() {
+    {
+        label: 'Show App', click: function () {
             mainWindow.show()
             tray.destroy()
-        } 
-    }, { 
-        label: 'Quit', click:  function() {
+        }
+    }, {
+        label: 'Quit', click: function () {
             mainWindow.destroy()
             app.quit()
         }
@@ -34,9 +34,9 @@ function createWindow() {
         minHeight: 870,
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'))
-    //mainWindow.openDevTools();
+
     mainWindow.on('minimize', function (event) {
-        loadTray();
+        loadTray()
         event.preventDefault()
         mainWindow.hide()
     })
@@ -46,8 +46,8 @@ function loadTray() {
     tray = new Tray(appIcon)
     tray.setToolTip('Window Changer Notifier')
     tray.setContextMenu(contextMenu)
-    if(appHasBeenMinimized == false) {
-        appHasBeenMinimized = true;
+    if (appHasBeenMinimized == false) {
+        appHasBeenMinimized = true
         tray.displayBalloon({
             title: 'The Application has been minimised!',
             content: 'To quit the application, right click on the tray icon and click on \'Quit\'.'
@@ -62,9 +62,7 @@ function loadTray() {
 app.whenReady().then(createWindow)
 Menu.setApplicationMenu(null)
 
-
 // demo
-
 ipcMain.on('asynchronous-message', (event, arg) => {
     console.log(arg) // prints "ping"
     event.reply('asynchronous-reply', 'pong')
